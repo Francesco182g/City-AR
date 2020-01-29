@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -16,27 +17,27 @@ MonoBehaviour:
     Width: 0
     Quality: 100
     TextureGUID: 260f5f218a40e49c0a0a55c499a121a8
-    LastModifiedTime: 6/14/2019 9:03:42 AM
+    LastModifiedTime: 03/12/2019 01:40:32
   - Name: Cafe
     Width: 0
-    Quality: 75
+    Quality: 90
     TextureGUID: eb5110f6dab7f4990b554f43afb86d1c
-    LastModifiedTime: 6/14/2019 9:03:42 AM
+    LastModifiedTime: 03/12/2019 01:40:32
   - Name: Keyboard
     Width: 0
-    Quality: 80
+    Quality: 
     TextureGUID: 9d2a3984082644fd984fe961b7f8272e
-    LastModifiedTime: 6/14/2019 9:03:42 AM
+    LastModifiedTime: 03/12/2019 01:40:32
   - Name: Winter
     Width: 0
-    Quality: 95
+    Quality: 
     TextureGUID: 42bc152179d434ef8b9a73da7cf757e2
-    LastModifiedTime: 6/14/2019 9:03:42 AM
+    LastModifiedTime: 03/12/2019 01:40:32
   - Name: Dog
     Width: 0
-    Quality: 55
+    Quality: 
     TextureGUID: f372f305c00af444c8cb5eb7277ca24b
-    LastModifiedTime: 6/14/2019 9:03:42 AM
+    LastModifiedTime: 03/12/2019 01:40:32
   - Name: Clothing
     Width: 0
     Quality: 90
