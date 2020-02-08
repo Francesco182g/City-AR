@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114876698896786350}
   m_Layer: 0
   m_Name: First Person Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,9 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ca0c6a3af6b4635b7e98c6ea0a0cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeviceCameraDirection: 0
   SessionConfig: {fileID: 11400000, guid: 9586a84d6c32f46b6ab7aeb6042f160d, type: 2}
-  CameraConfigFilter: {fileID: 11400000, guid: 200b4cba649e3413088e285251ccf44e, type: 2}
 --- !u!114 &114876698896786350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,5 +146,5 @@ MonoBehaviour:
   m_Device: 0
   m_PoseSource: 6
   m_TrackingType: 0
-  m_UpdateType: 1
+  m_UpdateType: 2
   m_UseRelativeTransform: 1

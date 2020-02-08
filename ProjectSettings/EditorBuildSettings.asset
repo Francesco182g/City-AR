@@ -4,29 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
-    guid: e6a6fa04348cb45c9b0221eb19c946da
-  - enabled: 0
-    path: Assets/GoogleARCore/Examples/AugmentedFaces/Scenes/AugmentedFaces.unity
-    guid: 7d2be221c0e8f4e259a08279fab0da42
-  - enabled: 0
-    path: Assets/GoogleARCore/Examples/AugmentedImage/Scenes/AugmentedImage.unity
-    guid: be567d47d3ab94b3badc5b211f535a24
-  - enabled: 0
-    path: Assets/GoogleARCore/Examples/CloudAnchors/Scenes/CloudAnchors.unity
-    guid: 83fb41cc294e74bdea57537befa00ffc
-  - enabled: 0
-    path: Assets/GoogleARCore/Examples/ComputerVision/Scenes/ComputerVision.unity
-    guid: 5ef0f7f7f2c7b4285b707265348bbffd
-  - enabled: 0
-    path: Assets/Scenes/AvellinoAR.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Scenes/GPSTest.unity
-    guid: c15531b95c7029d40b2817e38ec564e3
-  - enabled: 0
-    path: Assets/TestAR/Scenes/HelloAR.unity
-    guid: 7a8eb1cfac3d07b40b6495b5063350a2
+  m_Scenes: []
   m_configObjects: {}

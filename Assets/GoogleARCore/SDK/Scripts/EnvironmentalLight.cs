@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="EnvironmentalLight.cs" company="Google">
 //
 // Copyright 2017 Google Inc. All Rights Reserved.
@@ -20,95 +20,55 @@
 
 namespace GoogleARCore
 {
-    using GoogleARCoreInternal;
     using UnityEngine;
     using UnityEngine.Rendering;
 
     /// <summary>
-    /// A component that automatically adjusts lighting settings for the scene
+    /// A component that automatically adjust lighting settings for the scene
     /// to be inline with those estimated by ARCore.
     /// </summary>
     [ExecuteInEditMode]
-    [HelpURL(
-        "https://developers.google.com/ar/reference/unity/class/GoogleARCore/EnvironmentalLight")]
     public class EnvironmentalLight : MonoBehaviour
     {
         /// <summary>
-        /// The directional light used by
-        /// <see cref="LightEstimationMode"/>.<c>EnvironmentalHDRWithReflections</c> and
-        /// <see cref="LightEstimationMode"/>.<c>EnvironmentalHDRWithoutReflections</c>.
-        /// The rotation and color will be updated automatically by this component.
+        /// Unity update method that sets global light estimation shader constant to match
+        /// ARCore's calculated values.
         /// </summary>
-        public Light DirectionalLight;
-
-        private long m_LightEstimateTimestamp = -1;
-
-        /// <summary>
-        /// Unity update method that sets global light estimation shader constant and
-        /// <a href="https://docs.unity3d.com/ScriptReference/RenderSettings.html">
-        /// RenderSettings</a> to match ARCore's calculated values.
-        /// </summary>
-        [SuppressMemoryAllocationError(
-            IsWarning = true, Reason = "Requires further investigation.")]
         public void Update()
         {
-            if (Application.isEditor && (!Application.isPlaying ||
-                 !ARCoreProjectSettings.Instance.IsInstantPreviewEnabled))
-            {
-                // Set _GlobalColorCorrection to white in editor, if the value is not set, all
-                // materials using light estimation shaders will be black.
-                Shader.SetGlobalColor("_GlobalColorCorrection", Color.white);
-
-                // Set _GlobalLightEstimation for backward compatibility.
-                Shader.SetGlobalFloat("_GlobalLightEstimation", 1f);
-                return;
-            }
-
-            LightEstimate estimate = Frame.LightEstimate;
-            if (estimate.State != LightEstimateState.Valid ||
-                estimate.Mode == LightEstimationMode.Disabled)
+#if UNITY_EDITOR
+            // Set _GlobalLightEstimation to 1 in editor, if the value is not set, all materials
+            // using light estimation shaders will be black.
+            Shader.SetGlobalFloat("_GlobalLightEstimation", 1.0f);
+#else
+            if (Frame.LightEstimate.State != LightEstimateState.Valid)
             {
                 return;
             }
 
-            if (estimate.Mode == LightEstimationMode.AmbientIntensity)
+            // Use the following function to compute color scale:
+            // * linear growth from (0.0, 0.0) to (1.0, LinearRampThreshold)
+            // * slow growth from (1.0, LinearRampThreshold)
+            const float linearRampThreshold = 0.8f;
+            const float middleGray = 0.18f;
+            const float inclination = 0.4f;
+
+            float normalizedIntensity = Frame.LightEstimate.PixelIntensity / middleGray;
+            float colorScale = 1.0f;
+
+            if (normalizedIntensity < 1.0f)
             {
-                // Normalize pixel intensity by middle gray in gamma space.
-                const float middleGray = 0.466f;
-                float normalizedIntensity = estimate.PixelIntensity / middleGray;
-
-                // Apply color correction along with normalized pixel intensity in gamma space.
-                Shader.SetGlobalColor(
-                    "_GlobalColorCorrection",
-                    estimate.ColorCorrection * normalizedIntensity);
-
-                // Set _GlobalLightEstimation for backward compatibility.
-                Shader.SetGlobalFloat("_GlobalLightEstimation", normalizedIntensity);
+                colorScale = normalizedIntensity * linearRampThreshold;
             }
-            else if (m_LightEstimateTimestamp != estimate.Timestamp)
+            else
             {
-                m_LightEstimateTimestamp = estimate.Timestamp;
-                if (DirectionalLight != null)
-                {
-                    if (!DirectionalLight.gameObject.activeSelf || !DirectionalLight.enabled)
-                    {
-                        DirectionalLight.gameObject.SetActive(true);
-                        DirectionalLight.enabled = true;
-                    }
-
-                    DirectionalLight.transform.rotation = estimate.DirectionalLightRotation;
-                    DirectionalLight.color = estimate.DirectionalLightColor;
-                }
-
-                RenderSettings.ambientMode = AmbientMode.Skybox;
-                RenderSettings.ambientProbe = estimate.AmbientProbe;
-
-                if (estimate.Mode == LightEstimationMode.EnvironmentalHDRWithReflections)
-                {
-                    RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
-                    RenderSettings.customReflection = estimate.ReflectionProbe;
-                }
+                float b = (linearRampThreshold / inclination) - 1.0f;
+                float a = (b + 1.0f) / b * linearRampThreshold;
+                colorScale = a * (1.0f - (1.0f / ((b * normalizedIntensity) + 1.0f)));
             }
+
+            Shader.SetGlobalFloat("_GlobalLightEstimation", colorScale);
+#endif
         }
     }
 }
