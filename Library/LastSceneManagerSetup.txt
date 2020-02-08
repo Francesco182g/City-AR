@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Mapbox/Examples/0_PrefabScenes/Location-basedGame.unity
+- path: Assets/MapboxAR/Examples/Scenes/AvellinoAR.unity
   isLoaded: 1
   isActive: 1
