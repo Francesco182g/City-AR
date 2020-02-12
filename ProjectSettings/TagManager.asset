@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
+  - ARGameObject
+  - Map
+  - Path
+  - Both
   - 
   - 
   - 
