@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/MapboxAR/Examples/Scenes/TabletopAR.unity
     guid: a455922b0e2954431922c9fb6c5377e4
+  - enabled: 0
+    path: Assets/MapboxAR/Examples/Scenes/WorldScaleAR-ManualAlignment.unity
+    guid: d9ff170f22f0545c3970a889a592f312
   m_configObjects: {}
